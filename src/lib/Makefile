@@ -35,4 +35,4 @@ $(LIB_NAME).a: $(OBJS_$(LIB_NAME))
 
 nnio_build.c: nnio_build.c.in
 	sed -e "s~@@NANOIO_GIT_COMMIT@@~$(shell if [ -d $(TOPDIR)/.git ]; then git log -1 --pretty=format:%H | tr -d '\n'; elif [ -f $(TOPDIR)/commit ]; then cat $(TOPDIR)/commit | tr -d '\n'; else echo -n ???????; fi)~" \
-		-e "s~@@NANOIO_BUILD_MACHINE@@~$(shell whoami | tr -d '\n'; echo -n @; uname -a | tr -d '\n')~" < $^ > $@
+		-e "s~@@NANOIO_BUILD_MACHINE@@~$(shell whoami | tr -d '\n'; echo -n @; uname -a | tr -d '\n' | awk '{gsub("~","\\~"); print $0 }')~" < $^ > $@
